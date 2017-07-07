@@ -1,0 +1,7 @@
+services:
+    krg.shipping.fedex:
+        class: KRG\ShippingBundle\Transport\FedexTransport
+        arguments: ['%krg.shipping.fedex.key%', '%krg.shipping.fedex.password%', '%krg.shipping.fedex.account_number%', '%krg.shipping.fedex.meter_number%']
+        tags:
+            - {name: krg.shipping, alias: fedex}
+

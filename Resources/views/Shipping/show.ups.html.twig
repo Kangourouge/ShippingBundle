@@ -1,0 +1,90 @@
+{% extends '@KRGShipping/Shipping/show.layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        {% if tracking %}
+            <section class="mb-20">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{ asset('images/logo-ups.png') }}" alt="" style="margin-top: -8px;">
+                    </div>
+                    <div class="col-md-8">
+                        <strong>Waybill: {{ shipping.number }}</strong><br>
+
+                        {% if tracking.CurrentStatus is defined %}
+                            {% if tracking.CurrentStatus.Code == '011' %}
+                                <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
+                            {% else %}
+                                <strong>Status: {{ tracking.CurrentStatus.Description }}</strong>
+                            {% endif %}
+                            <br>
+                        {% endif %}
+
+                        {% if tracking.NumberOfPieces is defined %}
+                            {{ tracking.NumberOfPieces }} piece(s)
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-gray-light mb-10 pad-15">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% if tracking.Shipper is defined %}
+                            <strong>Origin Service Area:</strong><br>
+                            <span class="red">></span>
+                            <span class="upper">{{ tracking.Shipper.Address.City }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-6">
+                        {% if tracking.ShipTo is defined %}
+                            <strong>Destination Service Area:</strong><br>
+                            <span class="red">></span> <span class="upper">{{ tracking.ShipTo.Address.City }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            {% if tracking.Activity is defined and tracking.Activity|length %}
+                <div class="table-responsive">
+                    <table class="modal-table">
+                        <tbody>
+                        <tr>
+                            <th>{{ 'now'|date('D, M d, Y') }}</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                        {% for activity in tracking.Activity %}
+                            <tr>
+                                <td>
+                                    {{ activity.Description }}
+                                </td>
+                                <td>
+                                    {{ activity.ActivityLocation.Address.City is defined ? activity.ActivityLocation.Address.City : '-' }}
+                                </td>
+                                <td>
+                                    {% set date = activity.Date|split('', 2) %}
+                                    {{ '%s%s-%s-%s'|format(date[0], date[1], date[2], date[3]) }}
+                                </td>
+                                <td>
+                                    {% set time = activity.Time|split('', 2) %}
+                                    {{ '%s:%s:%s'|format(time[0], time[1], time[2]) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>Unable to recover shipping history.</p>
+            {% endif %}
+
+
+        {% else %}
+            <div class="text-center bg-gray-light pad-15 mb-10 fw500">
+                Error during tracking recovery.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

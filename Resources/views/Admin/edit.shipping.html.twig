@@ -1,0 +1,18 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% form_theme form '@SonataAdmin/Form/form_admin_fields.html.twig' %}
+
+{% block form %}
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">Shipping</h4>
+            </div>
+
+            <div class="box-body">
+                <h4 class="box-title">Shipping informations</h4>
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

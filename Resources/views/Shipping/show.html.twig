@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" class="icon-close"></span>
+    </button>
+    <h4 class="h1 mt-15 mb-30 modal-title">Shipping summary</h4>
+</div>
+<div class="modal-body">
+    {% if shipment %}
+        <section class="block">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="tablecss v-bottom">
+                        <div>
+                            {% if shipment.delivered %}
+                                <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
+                            {% endif %}
+                        </div>
+                        <div>
+                            <strong>Waybill: {{ shipment.number }}</strong>
+                            <div>
+                                {% if shipment.signatory %}
+                                    <a href="#" class="red">
+                                        Signed for by: {{ shipment.signatory }}<br>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <strong>
+                        {% if shipment.deliveredAt is not null %}
+                            {{ shipment.deliveredAt|date('D, M d, Y') }}<br>
+                        {% endif %}
+                        Origin Service Area:
+                    </strong>
+                    <br>
+                    <span class="red">></span> <span class="upper">{{ shipment.origin }}</span> <br>
+                    <strong>Destination Service Area:</strong> <br>
+                    <span class="red">></span> <span class="upper">{{ shipment.destination }}</span>
+                </div>
+                <div class="col-sm-2">
+                    {{ shipment.pieces }} Piece(s)
+                </div>
+            </div>
+        </section>
+
+        <div class="table-responsive">
+            <table class="modal-table">
+                <tbody>
+                {% for date, shipmentEvents in shipment.groupedShipmentEvents %}
+                    <tr>
+                        <th>{{ date }}</th>
+                        <th>Location</th>
+                        <th>Time</th>
+                        <th>Pieces</th>
+                    </tr>
+                    {% for shipmentEvent in shipmentEvents %}
+                        <tr>
+                            <td>{{ shipmentEvent.description }}</td>
+                            <td>{{ shipmentEvent.area }}</td>
+                            <td>{{ shipmentEvent.date|date('H:i') }}</td>
+                            <td>{{ shipmentEvent.pieces }} Pieces</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center">
+            No tracking found.
+        </p>
+    {% endif %}
+</div>

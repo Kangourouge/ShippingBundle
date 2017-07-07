@@ -1,0 +1,10 @@
+{% extends "KRGShippingBundle:Dhl:layout.xml.twig" %}
+
+{% set requestName = 'UnknownTrackingRequest' %}
+
+{% block body %}
+<AccountNumber>{{ accountNumber }}</AccountNumber>
+    <ShipperReference>
+        <ReferenceID>{{ trackingReference }}</ReferenceID>
+    </ShipperReference>
+{% endblock %}

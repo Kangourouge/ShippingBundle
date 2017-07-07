@@ -1,0 +1,9 @@
+{% extends "KRGShippingBundle:Dhl:layout.xml.twig" %}
+
+{% set requestName = 'KnownTrackingRequest' %}
+
+{% block body %}
+<AWBNumber>{{ trackingNumber }}</AWBNumber>
+<LevelOfDetails>ALL_CHECK_POINTS</LevelOfDetails>
+<PiecesEnabled>S</PiecesEnabled>
+{% endblock %}

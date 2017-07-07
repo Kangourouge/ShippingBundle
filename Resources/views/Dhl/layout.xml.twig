@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<req:{{ requestName }} xmlns:req="http://www.dhl.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dhl.com {{ requestName }}.xsd">
+    {% block header %}
+    <Request>
+        <ServiceHeader>
+            <MessageTime>{{ messageTime|date('c') }}</MessageTime>
+            <MessageReference>{{ messageReference }}</MessageReference>
+            <SiteID>{{ siteId }}</SiteID>
+            <Password>{{ password }}</Password>
+        </ServiceHeader>
+    </Request>
+    {% endblock %}
+    <LanguageCode>en</LanguageCode>
+    {% block body %}
+    {% endblock %}
+</req:{{ requestName }}>
