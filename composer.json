@@ -1,6 +1,6 @@
 {
-    "name": "krg/shipping-bundle",
-    "description": "KRG Shipping Bundle",
+    "name": "kangourouge/shipping-bundle",
+    "description": "Kangourouge Shipping Bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -15,9 +15,7 @@
     ],
     "require": {
         "php":                               ">=7",
-        "symfony/symfony":                   "2.8.*",
-        "gabrielbull/ups-api":               "0.7.*",
-        "jeremy-dunn/php-fedex-api-wrapper": "1.1.*"
+        "symfony/symfony":                   "2.8.*"
     },
     "autoload": {
         "psr-0": {
