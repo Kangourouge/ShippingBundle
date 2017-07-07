@@ -1,5 +1,5 @@
 parameters:
-    krg_shipping_class: krg.shipping.shipping_class
+    krg.shipping.form.type.class: KRG\ShippingBundle\Form\Type\ShippingType
 
 services:
     krg.shipping.registry:
@@ -9,9 +9,7 @@ services:
             - [setContainer, [@service_container]]
 
     krg.shipping.form.type:
-        class: KRG\ShippingBundle\Form\Type\ShippingType
-        arguments: [[]]
-        calls:
-            - [setShippingClass, ['krg.shipping.shipping_class']]
+        class: %krg.shipping.form.type.class%
+        arguments: [%krg.shipping.shipping_class%, []]
         tags:
             - {name: form.type, alias: shipping}

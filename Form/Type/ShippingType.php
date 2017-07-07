@@ -19,21 +19,22 @@ class ShippingType extends AbstractType
     /**
      * @var array
      */
-    var $transports;
+    protected $transports;
 
     /**
      * @var ShippingInterface
      */
-    private $shippingClass;
+    protected $shippingClass;
 
     /**
      * ShippingType constructor.
      *
      * @param array $transports
      */
-    public function __construct(array $transports)
+    public function __construct($shippingClass, array $transports)
     {
         $this->transports = $transports;
+        $this->shippingClass = $shippingClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -55,11 +56,8 @@ class ShippingType extends AbstractType
             ));
     }
 
-    /**
-     * @param ShippingInterface $shippingClass
-     */
-    public function setShippingClass(ShippingInterface $shippingClass)
+    public function getName()
     {
-        $this->shippingClass = $shippingClass;
+        return 'shipping';
     }
 }

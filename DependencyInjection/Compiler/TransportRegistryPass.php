@@ -23,6 +23,6 @@ class TransportRegistryPass implements CompilerPassInterface
         $definition->replaceArgument(0, $services);
 
         $definition = $container->getDefinition('krg.shipping.form.type');
-        $definition->replaceArgument(0, array_keys($services));
+        $definition->replaceArgument(1, array_keys($services));
     }
 }
