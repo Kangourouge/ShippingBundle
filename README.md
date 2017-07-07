@@ -84,3 +84,12 @@ class Shipping extends BaseShipping
 {
 }
 ```
+
+
+Dependencies
+------
+
+```
+"gabrielbull/ups-api":               "0.7.*",
+"jeremy-dunn/php-fedex-api-wrapper": "1.1.*"
+```
