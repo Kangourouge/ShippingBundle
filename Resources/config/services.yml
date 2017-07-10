@@ -4,12 +4,11 @@ parameters:
 services:
     krg.shipping.registry:
         class: KRG\ShippingBundle\Transport\TransportRegistry
-        arguments: [[]]
         calls:
             - [setContainer, [@service_container]]
 
     krg.shipping.form.type:
         class: %krg.shipping.form.type.class%
-        arguments: [%krg.shipping.shipping_class%, []]
+        arguments: [%krg.shipping.shipping_class%]
         tags:
             - {name: form.type, alias: shipping}

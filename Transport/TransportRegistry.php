@@ -19,11 +19,6 @@ class TransportRegistry
      */
     private $transports;
 
-    function __construct($transports)
-    {
-        $this->transports = $transports;
-    }
-
     /**
      * @param Container $container
      */
@@ -70,5 +65,10 @@ class TransportRegistry
     public function has($name)
     {
         return isset($this->transports[$name]);
+    }
+
+    public function setTransports(array $transports)
+    {
+        $this->transports = $transports;
     }
 }

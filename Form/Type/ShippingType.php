@@ -31,9 +31,8 @@ class ShippingType extends AbstractType
      *
      * @param array $transports
      */
-    public function __construct($shippingClass, array $transports)
+    public function __construct($shippingClass)
     {
-        $this->transports = $transports;
         $this->shippingClass = $shippingClass;
     }
 
@@ -41,7 +40,7 @@ class ShippingType extends AbstractType
     {
         $builder
             ->add('transport', ChoiceType::class, array(
-                'choices' => TransportEnum::getChoices(array_intersect(TransportEnum::$values, $this->transports)) // TODO: limit "transport" based on config filling
+                'choices' => TransportEnum::getChoices(array_intersect(TransportEnum::$values, $this->transports))
             ))
             ->add('number', TextType::class)
             ->add('reference', TextType::class)
@@ -59,5 +58,10 @@ class ShippingType extends AbstractType
     public function getName()
     {
         return 'shipping';
+    }
+
+    public function setTransports(array $transports)
+    {
+        $this->transports = $transports;
     }
 }

@@ -22,13 +22,12 @@ class KRGShippingExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        // Load transport_name.yml file only if it has been declared in config.yml
         foreach ($config['transports'] as $name => $config) {
             $loader->load(sprintf('%s.yml', $name));
             foreach ($config as $key => $value) {
                 $container->setParameter(sprintf('krg.shipping.%s.%s', $name, $key), $value);
             }
         }
-
-
     }
 }
