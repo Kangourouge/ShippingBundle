@@ -6,7 +6,7 @@ Configuration
 AppKernel
 ---------
 
-```
+```php
 # app/AppKernel.php
 
 <?php
@@ -25,7 +25,7 @@ public function registerBundles()
 Configuration
 -------------
 
-```
+```yaml
 # app/config/config.yml
 
 doctrine:
@@ -58,7 +58,7 @@ krg_shipping:
 Routing
 -------
 
-```
+```yaml
 # app/config/routing.yml
 
 krg_shipping:
@@ -68,7 +68,7 @@ krg_shipping:
 Entity
 ------
 
-```
+```php
 <?php
 
 namespace AppBundle\Entity;
@@ -89,7 +89,7 @@ class Shipping extends BaseShipping
 Dependencies
 ------
 
-```
+```json
 "gabrielbull/ups-api":               "0.7.*",
 "jeremy-dunn/php-fedex-api-wrapper": "1.1.*"
 ```
