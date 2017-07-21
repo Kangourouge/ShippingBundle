@@ -6,11 +6,14 @@ class UpsModel extends ShippingModel
 {
     /**
      * TrackingResponse constructor.
+     *
+     * @param $shipment
+     * @param $reference
      */
-    public function __construct($shipment, $number)
+    public function __construct($shipment, $reference)
     {
-        $this->number = $number;
-        $this->reference = null;
+        $this->number = null;
+        $this->reference = $reference;
         $this->status = $shipment->CurrentStatus->Description;
         $this->origin = self::formatAddress($shipment->Shipper->Address);
         $this->destination = self::formatAddress($shipment->ShipTo->Address);
@@ -21,7 +24,7 @@ class UpsModel extends ShippingModel
         $this->shippedAt = null;
         $this->shipmentEvents = array();
 
-        foreach($shipment->Activity as $activity) {
+        foreach ($shipment->Activity as $activity) {
             $this->shipmentEvents[] = array(
                 'date'        => \DateTime::createFromFormat('Ymdhis', sprintf('%s%s', $activity->Date, $activity->Time)),
                 'description' => $activity->Description,

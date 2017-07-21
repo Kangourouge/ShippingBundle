@@ -72,13 +72,15 @@ class DhlTransport implements TransportInterface
         return new DhlModel($awbInfo);
     }
 
-    public function find($reference)
+    public function find($reference, $accountNumber = null)
     {
+        $accountNumber = $accountNumber ?? $this->accountNumber;
+
         $xml = $this->twig->render('KRGShippingBundle:Dhl:unknown.tracking.request.xml.twig', array(
             'trackingReference' => $reference,
             'siteId'            => $this->siteId,
             'password'          => $this->password,
-            'accountNumber'     => $this->accountNumber,
+            'accountNumber'     => $accountNumber,
             'messageTime'       => new \DateTime,
             'messageReference'  => md5(date('c')),
         ));
@@ -98,7 +100,6 @@ class DhlTransport implements TransportInterface
         }
 
         $shipmentInfos = array();
-
         foreach ($nodes as $node) {
             $awbInfo = new Crawler($node);
             if (trim($awbInfo->filterXPath('//Status')->text()) === 'success') {

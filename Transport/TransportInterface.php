@@ -15,8 +15,9 @@ interface TransportInterface
 
     /**
      * @param $reference
+     * @param $accountNumber
      *
      * @return ShippingModelInterface
      */
-    public function find($reference);
+    public function find($reference, $accountNumber = null);
 }

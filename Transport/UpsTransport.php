@@ -14,6 +14,10 @@ class UpsTransport implements TransportInterface
 
     /**
      * UpsTransport constructor.
+
+     * @param $accessKey
+     * @param $userId
+     * @param $password
      */
     public function __construct($accessKey, $userId, $password)
     {
@@ -21,6 +25,10 @@ class UpsTransport implements TransportInterface
         $this->ups = new Tracking($accessKey, $userId, $password, true);
     }
 
+    /**
+     * @param $number
+     * @return UpsModel|null
+     */
     public function get($number)
     {
         try {
@@ -32,14 +40,19 @@ class UpsTransport implements TransportInterface
         return new UpsModel($shipment, $number);
     }
 
-    public function find($reference)
+    /**
+     * @param $reference
+     * @param null $accountNumber
+     * @return UpsModel|null
+     */
+    public function find($reference, $accountNumber = null)
     {
         try {
             $shipment = $this->ups->trackByReference($reference);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
 
-        return new UpsModel($shipment, $number);
+        return new UpsModel($shipment, $reference);
     }
 }

@@ -29,13 +29,19 @@ abstract class Shipping implements ShippingInterface
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
+    protected $reference;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
     protected $number;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
-    protected $reference;
+    protected $accountId;
 
     public function getId()
     {
@@ -66,6 +72,29 @@ abstract class Shipping implements ShippingInterface
     }
 
     /**
+     * Set reference
+     *
+     * @param string $reference
+     * @return ShippingInterface
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
      * Set number
      *
      * @param string $number
@@ -89,25 +118,25 @@ abstract class Shipping implements ShippingInterface
     }
 
     /**
-     * Set reference
+     * Set accountId
      *
-     * @param string reference
+     * @param string $accountId
      * @return ShippingInterface
      */
-    public function setReference($reference)
+    public function setAccountId($accountId)
     {
-        $this->reference = $reference;
+        $this->accountId = $accountId;
 
         return $this;
     }
 
     /**
-     * Get reference
+     * Get accountId
      *
      * @return string
      */
-    public function getReference()
+    public function getAccountId()
     {
-        return $this->reference;
+        return $this->accountId;
     }
 }

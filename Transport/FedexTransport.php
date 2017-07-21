@@ -128,7 +128,9 @@ class FedexTransport extends AbstractRequest implements TransportInterface
         return new FedexModel($response->TrackDetails);
     }
 
-    public function find($reference)
+    // TODO: find by reference FEDEX
+    public function find($reference, $accountNumber = null)
     {
+        $accountNumber = $accountNumber ?? $this->accountNumber;
     }
 }
