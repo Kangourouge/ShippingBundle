@@ -103,9 +103,9 @@ class DhlTransport implements TransportInterface
         foreach ($nodes as $node) {
             $awbInfo = new Crawler($node);
             if (trim($awbInfo->filterXPath('//Status')->text()) === 'success') {
-                $shipmentInfo = new ShipmentInfo($awbInfo);
-                if ($shipmentInfo->getTrackingNumber() !== null) {
-                    $shipmentInfos[$shipmentInfo->getTrackingNumber()] = $shipmentInfo;
+                $shipmentInfo = new DhlModel($awbInfo);
+                if ($shipmentInfo->getNumber() !== null) {
+                    $shipmentInfos[$shipmentInfo->getNumber()] = $shipmentInfo;
                 }
             }
         }
