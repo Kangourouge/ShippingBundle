@@ -22,7 +22,7 @@ class UpsTransport implements TransportInterface
     public function __construct($accessKey, $userId, $password)
     {
         // Turn last parameter to true for debugging
-        $this->ups = new Tracking($accessKey, $userId, $password, true);
+        $this->ups = new Tracking($accessKey, $userId, $password, false);
     }
 
     /**
