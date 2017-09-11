@@ -2,6 +2,7 @@
 
 namespace KRG\ShippingBundle\Form\Type;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use KRG\ShippingBundle\Doctrine\DBAL\TransportEnum;
 use KRG\ShippingBundle\Entity\ShippingInterface;
@@ -31,9 +32,9 @@ class ShippingType extends AbstractType
      *
      * @param array $transports
      */
-    public function __construct($shippingClass)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->shippingClass = $shippingClass;
+        $this->shippingClass = $entityManager->getClassMetadata(ShippingInterface::class)->getName();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

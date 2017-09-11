@@ -17,7 +17,9 @@ class ShippingController extends Controller
     public function showAction($id)
     {
         /* @var $shipping ShippingInterface */
-        $shipping = $this->getDoctrine()->getManager()->getRepository($this->getParameter('krg.shipping.shipping_class'))->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $className = $entityManager->getClassMetadata(ShippingInterface::class)->getName();
+        $shipping = $this->getDoctrine()->getManager()->getRepository($className)->find($id);
 
         if (!$shipping) {
             throw new \Exception('Unable to find shipping');

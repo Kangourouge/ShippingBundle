@@ -16,7 +16,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('krg_shipping');
         $rootNode
             ->children()
-                ->scalarNode('shipping_class')->isRequired()->cannotBeEmpty()->end()
                 ->arrayNode('transports')
                     ->children()
                         ->arrayNode('dhl')

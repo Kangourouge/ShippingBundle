@@ -34,10 +34,13 @@ doctrine:
             enum: string
             set: string
         types:
-            transport_enum: KRG\ShippingBundle\Doctrine\DBAL\TransportEnum
+        
+    orm:
+        resolve_target_entities:
+            KRG\ShippingBundle\Entity\ShippingInterface: AppBundle\Entity\Shipping
+
 ...
 krg_shipping:
-    shipping_class: AppBundle\Entity\Shipping
     transports:
         dhl:
             url: %dhl_url%

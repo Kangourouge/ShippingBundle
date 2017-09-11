@@ -5,10 +5,10 @@ services:
     krg.shipping.registry:
         class: KRG\ShippingBundle\Transport\TransportRegistry
         calls:
-            - [setContainer, [@service_container]]
+            - [setContainer, ['@service_container']]
 
     krg.shipping.form.type:
-        class: %krg.shipping.form.type.class%
-        arguments: [%krg.shipping.shipping_class%]
+        class: '%krg.shipping.form.type.class%'
+        arguments: ['@doctrine.orm.entity_manager']
         tags:
             - {name: form.type, alias: shipping}
