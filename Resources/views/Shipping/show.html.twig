@@ -4,13 +4,15 @@
     </button>
     <h4 class="h1 mt-15 mb-15 modal-title">Shipping summary</h4>
 
-    <p class="text-center mb-0">
-        {% if shipment.delivered %}
-            <strong>Delivered</strong> <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
-        {% elseif shipment.deliveryDate %}
-            <strong>In Transit, scheduled delivery: {{ shipment.deliveryDate|date('D, M d, Y') }}</strong>
-        {% endif %}
-    </p>
+    {% if shipment %}
+        <p class="text-center mb-0">
+            {% if shipment.delivered %}
+                <strong>Delivered</strong> <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
+            {% elseif shipment.deliveryDate %}
+                <strong>In Transit, scheduled delivery: {{ shipment.deliveryDate|date('D, M d, Y') }}</strong>
+            {% endif %}
+        </p>
+    {% endif %}
 </div>
 <div class="modal-body">
     {% if shipment %}
