@@ -12,27 +12,40 @@ class UpsModel extends ShippingModel
      */
     public function __construct($shipment, $reference)
     {
-        $this->number = null;
+        $this->number = $shipment->ShipmentIdentificationNumber;
         $this->reference = $reference;
         $this->status = isset($shipment->CurrentStatus) ? $shipment->CurrentStatus->Description : '';
         $this->origin = self::formatAddress($shipment->Shipper->Address);
         $this->destination = self::formatAddress($shipment->ShipTo->Address);
         $this->pieces = isset($shipment->NumberOfPieces) ? $shipment->NumberOfPieces : '';
+        $this->weight = isset($shipment->ShipmentWeight) ? $shipment->ShipmentWeight->Weight : '';
         $this->shipper = null;
         $this->consignee = null;
-        $this->delivered = isset($shipment->CurrentStatus) ? $shipment->CurrentStatus->Code === '011' : '';
-        $this->shippedAt = null;
+        $this->shippedAt = \DateTime::createFromFormat('Ymdhis', $shipment->PickupDate);
         $this->shipmentEvents = array();
 
-        if (isset($shipment->Activity)) {
-            foreach ($shipment->Activity as $activity) {
+        $this->deliveryDate = null;
+        if (isset($shipment->ScheduledDeliveryDate)) {
+            $this->deliveryDate = \DateTime::createFromFormat('Ymd', $shipment->ScheduledDeliveryDate);
+        }
+        if (isset($shipment->RescheduledDeliveryDate)) {
+            $this->deliveryDate = \DateTime::createFromFormat('Ymd', $shipment->RescheduledDeliveryDate);
+        }
+
+        $this->delivered = false;
+        if (isset($shipment->Package->Activity)) {
+            foreach ($shipment->Package->Activity as $activity) {
                 $this->shipmentEvents[] = array(
                     'date'        => \DateTime::createFromFormat('Ymdhis', sprintf('%s%s', $activity->Date, $activity->Time)),
-                    'description' => $activity->Description,
+                    'description' => $activity->Status->StatusType->Description,
                     'signatory'   => null,
                     'area'        => self::formatAddress($activity->ActivityLocation->Address),
                     'pieces'      => null,
                 );
+
+                if ($activity->Status->StatusType->Code === 'D') {
+                    $this->delivered = true;
+                }
             }
         }
 

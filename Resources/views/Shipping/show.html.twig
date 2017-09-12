@@ -2,21 +2,28 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true" class="icon-close"></span>
     </button>
-    <h4 class="h1 mt-15 mb-30 modal-title">Shipping summary</h4>
+    <h4 class="h1 mt-15 mb-15 modal-title">Shipping summary</h4>
+
+    <p class="text-center mb-0">
+        {% if shipment.delivered %}
+            <strong>Delivered</strong> <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
+        {% elseif shipment.deliveryDate %}
+            <strong>In Transit, scheduled delivery: {{ shipment.deliveryDate|date('D, M d, Y') }}</strong>
+        {% endif %}
+    </p>
 </div>
 <div class="modal-body">
     {% if shipment %}
         <section class="block">
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="tablecss v-bottom">
                         <div>
-                            {% if shipment.delivered %}
-                                <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
-                            {% endif %}
-                        </div>
-                        <div>
-                            <strong>Waybill: {{ shipment.number }}</strong>
+                            <strong>Waybill: {{ shipment.number }}</strong><br>
+                            Shipped at: {{ shipment.shippedAt|date('d/m/Y') }}<br>
+                            {% if shipment.weight %}Weight: {{ shipment.weight }} kgs<br>{% endif %}
+                            {% if shipment.pieces %}{{ shipment.pieces }} Piece(s)<br>{% endif %}
+
                             <div>
                                 {% if shipment.signatory %}
                                     <a href="#" class="red">
@@ -27,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <strong>
                         {% if shipment.deliveredAt is not null %}
                             {{ shipment.deliveredAt|date('D, M d, Y') }}<br>
@@ -38,9 +45,6 @@
                     <span class="red">></span> <span class="upper">{{ shipment.origin }}</span> <br>
                     <strong>Destination Service Area:</strong> <br>
                     <span class="red">></span> <span class="upper">{{ shipment.destination }}</span>
-                </div>
-                <div class="col-sm-2">
-                    {{ shipment.pieces }} Piece(s)
                 </div>
             </div>
         </section>

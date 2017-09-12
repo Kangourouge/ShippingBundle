@@ -37,6 +37,11 @@ abstract class ShippingModel implements ShippingModelInterface
     /**
      * @var string
      */
+    protected $weight;
+
+    /**
+     * @var string
+     */
     protected $shipper;
 
     /**
@@ -68,6 +73,11 @@ abstract class ShippingModel implements ShippingModelInterface
      * @var array
      */
     protected $shipmentEvents;
+
+    /**
+     * @var array
+     */
+    protected $deliveryDate;
 
     /**
      * @return string
@@ -173,15 +183,35 @@ abstract class ShippingModel implements ShippingModelInterface
         return $this->signatory;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * @return String
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
     public function getGroupedShipmentEvents()
     {
         $groupedShipmentEvents = array();
         foreach ($this->shipmentEvents as $shipmentEvent) {
-            $date = $shipmentEvent['date']->format('D, M d, Y');
-            if (!isset($groupedShipmentEvents[$date])) {
-                $groupedShipmentEvents[$date] = array();
+            if ($shipmentEvent['date'] instanceof \DateTime) {
+                $date = $shipmentEvent['date']->format('D, M d, Y');
+
+                if (!isset($groupedShipmentEvents[$date])) {
+                    $groupedShipmentEvents[$date] = array();
+                }
+
+                $groupedShipmentEvents[$date][] = $shipmentEvent;
             }
-            $groupedShipmentEvents[$date][] = $shipmentEvent;
         }
 
         return $groupedShipmentEvents;
