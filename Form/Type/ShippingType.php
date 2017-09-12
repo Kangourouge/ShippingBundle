@@ -44,7 +44,8 @@ class ShippingType extends AbstractType
                 'choices' => TransportEnum::getChoices(array_intersect(TransportEnum::$values, $this->transports))
             ))
             ->add('number', TextType::class, array(
-                'label' => 'Shipping number'
+                'label'    => 'Shipping number',
+                'required' => false
             ))
             ->add('reference', TextType::class, array(
                 'label'    => 'Transporter reference',
