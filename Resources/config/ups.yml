@@ -3,4 +3,4 @@ services:
         class: KRG\ShippingBundle\Transport\UpsTransport
         arguments: ['%krg.shipping.ups.access_key%', '%krg.shipping.ups.user_id%', '%krg.shipping.ups.password%']
         tags:
-            - {name: krg.shipping, alias: ups}
+            - { name: krg.shipping, alias: ups }

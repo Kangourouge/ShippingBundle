@@ -75,6 +75,7 @@ abstract class ShippingModel implements ShippingModelInterface
     protected $shipmentEvents;
 
     /**
+     * Scheduled delivery date
      * @var array
      */
     protected $deliveryDate;

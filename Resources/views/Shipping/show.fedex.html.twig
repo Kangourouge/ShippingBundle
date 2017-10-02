@@ -1,0 +1,24 @@
+{% extends '@KRGShipping/Shipping/show.html.twig' %}
+
+ {% block events %}
+     <div class="table-responsive">
+         <table class="modal-table">
+             <tbody>
+             {% for date, shipmentEvents in shipment.groupedShipmentEvents %}
+                 <tr>
+                     <th>{{ date }}</th>
+                     <th>Location</th>
+                     <th>Time</th>
+                 </tr>
+                 {% for shipmentEvent in shipmentEvents %}
+                     <tr>
+                         <td>{{ shipmentEvent.description }}</td>
+                         <td>{{ shipmentEvent.area }}</td>
+                         <td>{{ shipmentEvent.date|date('H:i') }}</td>
+                     </tr>
+                 {% endfor %}
+             {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ {% endblock %}

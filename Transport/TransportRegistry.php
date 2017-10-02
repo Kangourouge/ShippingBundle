@@ -2,10 +2,7 @@
 
 namespace KRG\ShippingBundle\Transport;
 
-use KRG\ShippingBundle\Doctrine\DBAL\TransportEnum;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TransportRegistry
 {
@@ -35,7 +32,8 @@ class TransportRegistry
     public function get($name)
     {
         if (!array_key_exists($name, $this->transports)) {
-            throw new \InvalidArgumentException(sprintf('The transport "%s" is not registered with the service container.', $name));
+            throw new \InvalidArgumentException(sprintf('The transport "%s" is not registered with the service container.',
+                $name));
         }
 
         if (is_string($this->transports[$name])) {

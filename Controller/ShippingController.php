@@ -12,26 +12,23 @@ class ShippingController extends Controller
 {
     /**
      * @Route("/shipping/{id}", name="shipping_show")
-     * @Template()
      */
     public function showAction($id)
     {
-        /* @var $shipping ShippingInterface */
         $entityManager = $this->getDoctrine()->getManager();
         $className = $entityManager->getClassMetadata(ShippingInterface::class)->getName();
-        $shipping = $this->getDoctrine()->getManager()->getRepository($className)->find($id);
+        /* @var $shipping ShippingInterface */
+        $shipping = $entityManager->getRepository($className)->find($id);
 
         if (!$shipping) {
             throw new \Exception('Unable to find shipping');
         }
 
-        /* @var $api TransportInterface */
+        /* @var $transport TransportInterface */
         $transport = $this->get('krg.shipping.registry')->get($shipping->getTransport());
 
-        $shipment = $transport->get($shipping->getNumber());
-
-        return array(
-            'shipment' => $shipment,
-        );
+        return $this->render(sprintf('KRGShippingBundle:Shipping:show.%s.html.twig', $shipping->getTransport()), array(
+            'shipment' => $transport->get($shipping->getNumber()),
+        ));
     }
 }

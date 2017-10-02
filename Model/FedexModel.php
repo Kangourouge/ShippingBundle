@@ -7,28 +7,29 @@ class FedexModel extends ShippingModel
     /**
      * FedexModel constructor.
      *
-     * @param $trackDetails
+     * @param $response
      */
-    public function __construct($trackDetails)
+    public function __construct($response)
     {
-        $this->number = $trackDetails->TrackingNumber;
-        $this->reference = null;
-        $this->status = $trackDetails->StatusDescription;
-        $this->origin = self::formatAddress($trackDetails->OriginLocationAddress);
-        $this->destination = self::formatAddress($trackDetails->DestinationAddress);
-        $this->pieces = $trackDetails->PackageCount;
-        $this->shipper = self::formatAddress($trackDetails->ShipperAddress);;
-        $this->consignee = null;
-        $this->delivered = $trackDetails->StatusCode === 'DL';
+        $trackDetails = $response->TrackDetails;
+
+        $this->number = isset($trackDetails->TrackingNumber) ? $trackDetails->TrackingNumber : null;
+        $this->status = isset($trackDetails->StatusDescription) ? $trackDetails->StatusDescription : null;
+        $this->origin = isset($trackDetails->OriginLocationAddress) ? self::formatAddress($trackDetails->OriginLocationAddress) : null;
+        $this->destination = isset($trackDetails->DestinationAddress) ? self::formatAddress($trackDetails->DestinationAddress) : null;
+        $this->weight = isset($trackDetails->PackageWeight->Value) ? round($trackDetails->PackageWeight->Value * 0.45359237, 2) : null;
+        $this->pieces = isset($trackDetails->PackageCount) ? $trackDetails->PackageCount : null;
+        $this->shipper = isset($trackDetails->ShipperAddress) ? self::formatAddress($trackDetails->ShipperAddress) : null;
+        $this->delivered = isset($trackDetails->StatusCode) ? $trackDetails->StatusCode === 'DL' : false;
 
         if (isset($trackDetails->ActualDeliveryTimestamp)) {
-            $this->deliveredAt = \DateTime::createFromFormat('YYYY-MM-DDTHH:MM:SS-xx:xx', sprintf('%s', $trackDetails->ActualDeliveryTimestamp));
+            $this->deliveredAt = \DateTime::createFromFormat('U', strtotime($trackDetails->ActualDeliveryTimestamp));
         }
 
         $this->shipmentEvents = array();
         foreach($trackDetails->Events as $event) {
             $this->shipmentEvents[] = array(
-                'date'        => \DateTime::createFromFormat('YYYY-MM-DDTHH:MM:SS-xx:xx', sprintf('%s', $event->Timestamp)),
+                'date'        => \DateTime::createFromFormat('U', strtotime($event->Timestamp)),
                 'description' => $event->EventDescription,
                 'area'        => self::formatAddress($event->Address),
             );

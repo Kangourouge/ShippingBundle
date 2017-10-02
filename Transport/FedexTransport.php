@@ -28,7 +28,6 @@ use FedEx\TrackService\ComplexType\TrackRequest;
 122816215025810 = Delivered
 843119172384577 = Hold at Location
 070358180009382 = Shipment Canceled
-
 */
 
 /**
@@ -113,7 +112,7 @@ class FedexTransport extends AbstractRequest implements TransportInterface
                     return null;
 
                 case 'ERROR':
-                    throw new \Exception(' Information about an error that occurred while processing your transaction.');
+                    throw new \Exception('Information about an error that occurred while processing your transaction.');
                     return null;
             }
         } catch (\SoapFault $e) {
@@ -125,7 +124,7 @@ class FedexTransport extends AbstractRequest implements TransportInterface
             return null;
         }
 
-        return new FedexModel($response->TrackDetails);
+        return new FedexModel($response);
     }
 
     // TODO: find by reference FEDEX

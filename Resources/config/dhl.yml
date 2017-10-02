@@ -1,6 +1,6 @@
 services:
     krg.shipping.dhl:
         class: KRG\ShippingBundle\Transport\DhlTransport
-        arguments: [@templating.engine.twig, '%krg.shipping.dhl.url%', '%krg.shipping.dhl.site_id%', '%krg.shipping.dhl.password%', '%krg.shipping.dhl.account_number%']
+        arguments: ['@templating.engine.twig', '%krg.shipping.dhl.url%', '%krg.shipping.dhl.site_id%', '%krg.shipping.dhl.password%', '%krg.shipping.dhl.account_number%']
         tags:
-            - {name: krg.shipping, alias: dhl}
+            - { name: krg.shipping, alias: dhl }
