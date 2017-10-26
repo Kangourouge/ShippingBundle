@@ -27,12 +27,14 @@ class FedexModel extends ShippingModel
         }
 
         $this->shipmentEvents = array();
-        foreach($trackDetails->Events as $event) {
-            $this->shipmentEvents[] = array(
-                'date'        => \DateTime::createFromFormat('U', strtotime($event->Timestamp)),
-                'description' => $event->EventDescription,
-                'area'        => self::formatAddress($event->Address),
-            );
+        if (isset($trackDetails->Events)) {
+            foreach($trackDetails->Events as $event) {
+                $this->shipmentEvents[] = array(
+                    'date'        => \DateTime::createFromFormat('U', strtotime($event->Timestamp)),
+                    'description' => $event->EventDescription,
+                    'area'        => self::formatAddress($event->Address),
+                );
+            }
         }
 
         $shipmentEvent = end($this->shipmentEvents);
