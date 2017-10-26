@@ -140,7 +140,7 @@ class FedexTransport implements TransportInterface
         $versionId = new TrackService\ComplexType\VersionId();
         $versionId
             ->setServiceId('trck')
-            ->setMajor(14)
+            ->setMajor(5)
             ->setIntermediate(0)
             ->setMinor(0);
         $trackRequest->setVersion($versionId);
@@ -153,7 +153,7 @@ class FedexTransport implements TransportInterface
         $trackRequest->setPackageIdentifier($packageIdentifier);
 
         try {
-            $response = (new Request())->getTrackReply($trackRequest);
+            $response = (new TrackService\Request())->getTrackReply($trackRequest);
 
             switch ($response->HighestSeverity) {
                 case 'FAILURE':
