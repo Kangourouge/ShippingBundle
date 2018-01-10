@@ -2,7 +2,7 @@
 
 namespace KRG\ShippingBundle\Doctrine\DBAL;
 
-class TransportEnum extends EnumType
+class TransportEnum extends Enum
 {
     const
         DHL   = 'dhl',
@@ -11,9 +11,9 @@ class TransportEnum extends EnumType
     ;
 
     public static $values = array(
-        self::DHL   => self::DHL,
-        self::UPS   => self::UPS,
-        self::FEDEX => self::FEDEX,
+        self::DHL,
+        self::UPS,
+        self::FEDEX
     );
 
     public function getName()
