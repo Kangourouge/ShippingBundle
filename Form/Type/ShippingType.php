@@ -50,8 +50,7 @@ class ShippingType extends AbstractType
             ->add('reference', TextType::class, array(
                 'label'    => 'Transporter reference',
                 'required' => false
-            ))
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
