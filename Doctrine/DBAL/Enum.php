@@ -19,10 +19,7 @@ abstract class Enum extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        if (null === $value) {
-            return null;
-        }
-        if (!in_array($value, static::$values)) {
+        if ($value && !in_array($value, static::$values)) {
             throw new \InvalidArgumentException(sprintf("Invalid key '%s' for enum '%s'.", $value, $this->getName()));
         }
 
@@ -31,7 +28,7 @@ abstract class Enum extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if (!in_array($value, static::$values)) {
+        if ($value && !in_array($value, static::$values)) {
             throw new \InvalidArgumentException(sprintf("Invalid key '%s' for enum '%s'.", $value, $this->getName()));
         }
 
