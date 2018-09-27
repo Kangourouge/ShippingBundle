@@ -2,16 +2,19 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true" class="icon-close"></span>
     </button>
+
     <h4 class="h1 mt-15 mb-15 modal-title">Shipping summary</h4>
 
     {% if shipment %}
-        <p class="text-center mb-0">
-            {% if shipment.delivered %}
-                <strong>Delivered</strong> <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10">
-            {% elseif shipment.deliveryDate %}
+        {% if shipment.delivered or shipment.deliveredAt is not null %}
+            <p class="alert alert-success">
+                <img src="{{ asset('/images/check.png') }}" alt="" class="mr-10"> <strong>Delivered</strong>
+            </p>
+        {% elseif shipment.deliveryDate %}
+            <p class="alert alert-info">
                 <strong>In Transit, scheduled delivery: {{ shipment.deliveryDate|date('D, M d, Y') }}</strong>
-            {% endif %}
-        </p>
+            </p>
+        {% endif %}
     {% endif %}
 </div>
 <div class="modal-body">
